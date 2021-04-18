@@ -19,8 +19,8 @@ public class DbUtils {
             + "&allowPublicKeyRetrieval=true"
             + "&useSSL=false";
 
-    private static String username = "User";
-    private static String password = "user123";
+    private static String username = "~~~";
+    private static String password = "***";
 
     public static Connection getConnection() throws SQLException {
         Connection con = null;
