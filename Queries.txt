@@ -1,0 +1,50 @@
+-- All the assignments per course per student
+SELECT student.ID_STUDENT, student.FIRST_NAME, student.LAST_NAME, 
+	   course.ID_COURSE, course.TITLE AS COURSE_TITLE, course.STREAM, course.TYPE, 
+       assignment.ID_ASSIGNMENT, assignment.TITLE AS ASS_TITLE, assignment.MAX_ORAL_MARK, assignment.MAX_TOTAL_MARK       
+FROM course, student, working_assign, enrolled_stud, assignment
+WHERE course.ID_COURSE = enrolled_stud.ID_COURSE
+AND student.ID_STUDENT = enrolled_stud.ID_STUDENT
+AND assignment.ID_ASSIGNMENT = working_assign.ID_ASSIGNMENT
+AND student.ID_STUDENT = working_assign.ID_STUDENT
+ORDER BY working_assign.ID_STUDENT;
+
+
+-- All the assignments per course
+SELECT course.ID_COURSE, course.TITLE, STREAM, TYPE, assignment.ID_ASSIGNMENT, assignment.TITLE, assignment.DESCRIPTION, assignment.MAX_ORAL_MARK, assignment.MAX_TOTAL_MARK
+FROM has_assign , assignment , course
+WHERE has_assign.ID_COURSE = course.ID_COURSE
+	AND has_assign.ID_ASSIGNMENT = assignment.ID_ASSIGNMENT
+    ORDER BY has_assign.ID_COURSE;
+	
+	
+	-- All the students per course
+SELECT course.ID_COURSE, TITLE, STREAM, TYPE, student.ID_STUDENT, FIRST_NAME, LAST_NAME
+FROM enrolled_stud , course , student
+WHERE enrolled_stud.ID_COURSE = course.ID_COURSE
+	AND enrolled_stud.ID_STUDENT = student.ID_STUDENT
+    ORDER BY enrolled_stud.ID_COURSE;
+	
+	
+	-- A list of students that belong to more than one courses
+SELECT student.* 
+FROM enrolled_stud , student
+WHERE enrolled_stud.ID_STUDENT = student.ID_STUDENT
+GROUP BY enrolled_stud.ID_STUDENT
+HAVING count(enrolled_stud.ID_STUDENT) > 1;
+
+
+-- All the trainers per course
+SELECT course.ID_COURSE, TITLE, STREAM, TYPE, trainer.ID_TRAINER, FIRST_NAME, LAST_NAME
+FROM course , trainer
+WHERE course.ID_COURSE = trainer.ID_COURSE
+ORDER BY course.ID_COURSE;
+
+
+-- list of all the trainers
+SELECT * FROM trainer;
+
+
+-- list of all the assignments
+SELECT * FROM assignment;
+
